@@ -19,8 +19,10 @@ matrix:
     arch: arm64
   - python: 3.8
     arch: s390x
-  - python: 3.8
+  - name: "OSX"
     os: osx
+    osx_image: xcode12  # 10.15.5
+    language: shell
   include:
   - python: 3.5
     env: ONLY_BUILTINS=1
@@ -29,8 +31,10 @@ matrix:
       - pip install .[test]
   - python: 3.8
     env: PARAMSURVEY_VERBOSE=3 PYTEST_STDERR_VISIBLE=-s
-  - python: 3.8
+  - name: "OSX"
     os: osx
+    osx_image: xcode12  # 10.15.5
+    language: shell
 #  - python: 3.8
 #    arch: arm64  # works but takes 35 minutes
 #    env: ONLY_BUILTINS=1
