@@ -20,7 +20,7 @@ matrix:
   - python: 3.8
     arch: s390x
   - python: 3.8
-    os: maosx
+    os: osx
   include:
   - python: 3.5
     env: ONLY_BUILTINS=1
@@ -30,7 +30,7 @@ matrix:
   - python: 3.8
     env: PARAMSURVEY_VERBOSE=3 PYTEST_STDERR_VISIBLE=-s
   - python: 3.8
-    os: maosx
+    os: osx
 #  - python: 3.8
 #    arch: arm64  # works but takes 35 minutes
 #    env: ONLY_BUILTINS=1
