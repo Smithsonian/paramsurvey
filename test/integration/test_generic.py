@@ -126,6 +126,10 @@ def test_args(capsys, paramsurvey_init):
         # whoops
         pass
     print('GREG driver chdir is', chdir)
+    print('GREG does dir exist', os.path.exists(chdir))
+    print('GREG can we make it')
+    os.makedirs(chdir, exist_ok=True)
+    print('GREG does dir exist', os.path.exists(chdir))
 
     out_func_called = False
     test_user_kwargs = {'test': 1, 'expected_cwd': chdir}
