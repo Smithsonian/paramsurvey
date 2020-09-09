@@ -26,7 +26,7 @@ matrix:
     language: shell
     install:
       # for osx we can't say "python: 3.8" so we use the system python
-      - python --version
+      - python3 --version
       - pip3 install .
       - pip3 install .[test]
   include:
