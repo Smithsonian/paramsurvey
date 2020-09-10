@@ -124,8 +124,9 @@ def do_test_args(pset, system_kwargs, user_kwargs):
 def test_args(capsys, paramsurvey_init):
     if platform.system() == 'Darwin':
         # in Darwin, the tempfile directory is process-specific
-        # and can't be accessed by a multiprocessing Pool process
-        chdir = '/var/tmp'
+        # and can't be accessed by a different multiprocessing Pool process
+        # this one is shared between all processes
+        chdir = '/private/var/tmp'
     else:
         chdir = tempfile.gettempdir()
     print('GREG chdir' , chdir)
