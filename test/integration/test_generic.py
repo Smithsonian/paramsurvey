@@ -4,6 +4,7 @@ import tempfile
 import pytest
 import sys
 from io import StringIO
+import platform
 
 import pandas as pd
 
@@ -121,15 +122,14 @@ def do_test_args(pset, system_kwargs, user_kwargs):
 
 
 def test_args(capsys, paramsurvey_init):
-    chdir = tempfile.gettempdir()
+    if platform.system() == 'Darwin':
+        # in Darwin, the tempfile directory is process-specific
+        # and can't be accessed by a multiprocessing Pool process
+        chdir = '/var/tmp'
+    else:
+        chdir = tempfile.gettempdir()
     if os.getcwd() == chdir:
-        # whoops
-        pass
-    print('GREG driver chdir is', chdir)
-    print('GREG does dir exist', os.path.exists(chdir))
-    print('GREG can we chdir to it')
-    os.chdir(chdir)
-    print('GREG continuing')
+        pytest.skip('somehow we were already in the chdir')
 
     out_func_called = False
     test_user_kwargs = {'test': 1, 'expected_cwd': chdir}

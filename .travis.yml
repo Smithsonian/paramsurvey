@@ -25,7 +25,7 @@ matrix:
     osx_image: xcode12  # 10.15.5
     language: shell
     install:
-      # for osx we can't say "python: 3.8" so we use the system python
+      # for osx we can't say "python: 3.8" so we use the system python3
       - python3 --version
       - pip3 install .
       - pip3 install .[test]
@@ -44,7 +44,7 @@ matrix:
     language: shell
     install:
       # for osx we can't say "python: 3.8" so we use the system python
-      - python --version
+      - python3 --version
       - pip3 install .
       - pip3 install .[test]
 #  - python: 3.8
