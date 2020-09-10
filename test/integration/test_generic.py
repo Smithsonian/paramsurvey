@@ -117,7 +117,7 @@ def test_results(paramsurvey_init):
 def do_test_args(pset, system_kwargs, user_kwargs):
     # this function cannot be nested inside test_args() because nested funcs can't be pickled
     print('GREG worker getcwd is', os.getcwd())
-    assert os.getcwd() == user_kwargs['expected_cwd'], 'chdir appears to work'
+    assert os.getcwd() == user_kwargs['expected_cwd'], 'chdir appears to work, getcwd=' + os.getcwd()
     assert 'out_subdir' in system_kwargs
 
 
@@ -128,6 +128,7 @@ def test_args(capsys, paramsurvey_init):
         chdir = '/var/tmp'
     else:
         chdir = tempfile.gettempdir()
+    print('GREG chdir' , chdir)
     if os.getcwd() == chdir:
         pytest.skip('somehow we were already in the chdir')
 
