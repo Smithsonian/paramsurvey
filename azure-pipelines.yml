@@ -34,7 +34,7 @@ steps:
     pip install . .[test]
     echo myenv is $(myenv)
     if [ ! -z "$(myenv)" ]; then
-      echo using myenv to set
+      echo using myenv to set $(myenv)
       $(myenv)
     fi
     printenv
@@ -45,6 +45,10 @@ steps:
 
 - script: |
     pip install pytest pytest-azurepipelines
+    if [ ! -z "$(myenv)" ]; then
+      echo using myenv to set $(myenv)
+      $(myenv)
+    fi
     make test_coverage
   displayName: 'pytest'
 
