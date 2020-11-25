@@ -23,7 +23,7 @@ jobs:
           python.version: '3.8'
         Python38verbose:
           python.version: '3.8'
-	  myenv: PARAMSURVEY_VERBOSE=3
+	  myenv: "PARAMSURVEY_VERBOSE=3 PYTEST_STDERR_VISIBLE=-s"
         Python39noray:
           python.version: '3.9'
           myenv: ONLY_BUILTINS=1
