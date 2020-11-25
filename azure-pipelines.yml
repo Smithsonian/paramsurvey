@@ -6,54 +6,95 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'ubuntu-latest'
-strategy:
-  matrix:
-    Python35:
-      python.version: '3.5'
-      myenv: ONLY_BUILTINS=1
-    Python36:
-      python.version: '3.6'
-    Python37:
-      python.version: '3.7'
-    Python38:
-      python.version: '3.8'
-    Python39:
-      python.version: '3.9'
-      myenv: ONLY_BUILTINS=1
+jobs:
+  - job: linux
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      matrix:
+        Python35:
+          python.version: '3.5'
+          myenv: ONLY_BUILTINS=1
+        Python36:
+          python.version: '3.6'
+        Python37:
+          python.version: '3.7'
+        Python38:
+          python.version: '3.8'
+        Python39:
+          python.version: '3.9'
+          myenv: ONLY_BUILTINS=1
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(python.version)'
+      displayName: 'Use Python $(python.version)'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install . .[test]
-    echo myenv is $(myenv)
-    if [ ! -z "$(myenv)" ]; then
-      echo using myenv to set $(myenv)
-      export $(myenv)
-      echo ONLY_BUILTINS=$ONLY_BUILTINS
-    fi
-    printenv
-    if [ -z "$ONLY_BUILTINS" ]; then
-      pip install .[ray]
-    fi
-  displayName: 'Install dependencies'
+    - script: |
+        python -m pip install --upgrade pip
+        pip install . .[test]
+        echo myenv is $(myenv)
+        if [ ! -z "$(myenv)" ]; then
+          echo using myenv to set $(myenv)
+          export $(myenv)
+          echo ONLY_BUILTINS=$ONLY_BUILTINS
+        fi
+        printenv
+        if [ -z "$ONLY_BUILTINS" ]; then
+          pip install .[ray]
+        fi
+      displayName: 'Install dependencies'
 
-- script: |
-    pip install pytest pytest-azurepipelines
-    if [ ! -z "$(myenv)" ]; then
-      echo using myenv to set $(myenv)
-      export $(myenv)
-      echo ONLY_BUILTINS=$ONLY_BUILTINS
-    fi
-    make test_coverage
-  displayName: 'pytest'
+    - script: |
+        pip install pytest pytest-azurepipelines
+        if [ ! -z "$(myenv)" ]; then
+          echo using myenv to set $(myenv)
+          export $(myenv)
+          echo ONLY_BUILTINS=$ONLY_BUILTINS
+        fi
+        make test_coverage
+      displayName: 'pytest'
 
-- script: |
-    #coveralls
-  displayName: 'coveralls'
+    - script: |
+        #coveralls
+      displayName: 'coveralls'
+
+  - job: macos
+    pool:
+      vmImage: 'macOS-latest'
+    strategy:
+      matrix:
+        Python:
+          myenv: ONLY_BUILTINS=1
+
+    steps:
+    - script: |
+        python --version
+        python -m pip install --upgrade pip
+        pip install . .[test]
+        echo myenv is $(myenv)
+        if [ ! -z "$(myenv)" ]; then
+          echo using myenv to set $(myenv)
+          export $(myenv)
+          echo ONLY_BUILTINS=$ONLY_BUILTINS
+        fi
+        printenv
+        if [ -z "$ONLY_BUILTINS" ]; then
+          pip install .[ray]
+        fi
+      displayName: 'Install dependencies'
+
+    - script: |
+        pip install pytest pytest-azurepipelines
+        if [ ! -z "$(myenv)" ]; then
+          echo using myenv to set $(myenv)
+          export $(myenv)
+          echo ONLY_BUILTINS=$ONLY_BUILTINS
+        fi
+        make test_coverage
+      displayName: 'pytest'
+
+    - script: |
+        #coveralls
+      displayName: 'coveralls'
