@@ -36,6 +36,7 @@ steps:
     if [ ! -z "$(myenv)" ]; then
       echo using myenv to set $(myenv)
       $(myenv)
+      echo ONLY_BUILTINS=$ONLY_BUILTINS
     fi
     printenv
     if [ -z "$ONLY_BUILTINS" ]; then
@@ -48,6 +49,7 @@ steps:
     if [ ! -z "$(myenv)" ]; then
       echo using myenv to set $(myenv)
       $(myenv)
+      echo ONLY_BUILTINS=$ONLY_BUILTINS
     fi
     make test_coverage
   displayName: 'pytest'
