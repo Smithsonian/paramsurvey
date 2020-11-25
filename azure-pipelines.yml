@@ -70,6 +70,11 @@ jobs:
           myenv: ONLY_BUILTINS=1
 
     steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(python.version)'
+      displayName: 'Use Python $(python.version)'
+
     - script: |
         python --version
         python -m pip install --upgrade pip
