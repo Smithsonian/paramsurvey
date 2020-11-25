@@ -10,12 +10,18 @@ pool:
   vmImage: 'ubuntu-latest'
 strategy:
   matrix:
+    Python35:
+      python.version: '3.5'
+      env: ONLY_BUILTINS=1
     Python36:
       python.version: '3.6'
     Python37:
       python.version: '3.7'
     Python38:
       python.version: '3.8'
+    Python39:
+      python.version: '3.9'
+      env: ONLY_BUILTINS=1
 
 steps:
 - task: UsePythonVersion@0
@@ -25,11 +31,17 @@ steps:
 
 - script: |
     python -m pip install --upgrade pip
-    pip install . .[test] .[ray]
+    pip install . .[test]
+    if [ -z "$ONLY_BUILTINS" ]; then
+      pip install .[ray]
+    fi
   displayName: 'Install dependencies'
 
 - script: |
     pip install pytest pytest-azurepipelines
     make test_coverage
-    coveralls
   displayName: 'pytest'
+
+- script: |
+    #coveralls
+  displayName: 'coveralls'
