@@ -35,7 +35,7 @@ steps:
     echo myenv is $(myenv)
     if [ ! -z "$(myenv)" ]; then
       echo using myenv to set $(myenv)
-      $(myenv)
+      export $(myenv)
       echo ONLY_BUILTINS=$ONLY_BUILTINS
     fi
     printenv
@@ -48,7 +48,7 @@ steps:
     pip install pytest pytest-azurepipelines
     if [ ! -z "$(myenv)" ]; then
       echo using myenv to set $(myenv)
-      $(myenv)
+      export $(myenv)
       echo ONLY_BUILTINS=$ONLY_BUILTINS
     fi
     make test_coverage
