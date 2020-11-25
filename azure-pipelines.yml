@@ -12,7 +12,8 @@ strategy:
   matrix:
     Python35:
       python.version: '3.5'
-      env: ONLY_BUILTINS=1
+      env:
+        ONLY_BUILTINS: 1
     Python36:
       python.version: '3.6'
     Python37:
@@ -21,7 +22,8 @@ strategy:
       python.version: '3.8'
     Python39:
       python.version: '3.9'
-      env: ONLY_BUILTINS=1
+      env:
+        ONLY_BUILTINS: 1
 
 steps:
 - task: UsePythonVersion@0
