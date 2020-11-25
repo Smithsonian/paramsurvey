@@ -12,7 +12,7 @@ jobs:
       vmImage: 'ubuntu-latest'
     strategy:
       matrix:
-        Python35:
+        Python35noray:
           python.version: '3.5'
           myenv: ONLY_BUILTINS=1
         Python36:
@@ -21,7 +21,10 @@ jobs:
           python.version: '3.7'
         Python38:
           python.version: '3.8'
-        Python39:
+        Python38verbose:
+          python.version: '3.8'
+	  myenv: PARAMSURVEY_VERBOSE=3 PYTEST_STDERR_VISIBLE=-s
+        Python39noray:
           python.version: '3.9'
           myenv: ONLY_BUILTINS=1
 
@@ -34,13 +37,9 @@ jobs:
     - script: |
         python -m pip install --upgrade pip
         pip install . .[test]
-        echo myenv is $(myenv)
         if [ ! -z "$(myenv)" ]; then
-          echo using myenv to set $(myenv)
           export $(myenv)
-          echo ONLY_BUILTINS=$ONLY_BUILTINS
         fi
-        printenv
         if [ -z "$ONLY_BUILTINS" ]; then
           pip install .[ray]
         fi
@@ -49,9 +48,7 @@ jobs:
     - script: |
         pip install pytest pytest-azurepipelines
         if [ ! -z "$(myenv)" ]; then
-          echo using myenv to set $(myenv)
           export $(myenv)
-          echo ONLY_BUILTINS=$ONLY_BUILTINS
         fi
         make test_coverage
       displayName: 'pytest'
@@ -65,7 +62,7 @@ jobs:
       vmImage: 'macOS-latest'
     strategy:
       matrix:
-        Python38:
+        Python38noray:
           python.version: '3.8'
           myenv: ONLY_BUILTINS=1
 
@@ -76,16 +73,11 @@ jobs:
       displayName: 'Use Python $(python.version)'
 
     - script: |
-        python --version
         python -m pip install --upgrade pip
         pip install . .[test]
-        echo myenv is $(myenv)
         if [ ! -z "$(myenv)" ]; then
-          echo using myenv to set $(myenv)
           export $(myenv)
-          echo ONLY_BUILTINS=$ONLY_BUILTINS
         fi
-        printenv
         if [ -z "$ONLY_BUILTINS" ]; then
           pip install .[ray]
         fi
@@ -94,9 +86,7 @@ jobs:
     - script: |
         pip install pytest pytest-azurepipelines
         if [ ! -z "$(myenv)" ]; then
-          echo using myenv to set $(myenv)
           export $(myenv)
-          echo ONLY_BUILTINS=$ONLY_BUILTINS
         fi
         make test_coverage
       displayName: 'pytest'
