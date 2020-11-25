@@ -65,7 +65,8 @@ jobs:
       vmImage: 'macOS-latest'
     strategy:
       matrix:
-        Python:
+        Python38:
+          python.version: '3.8'
           myenv: ONLY_BUILTINS=1
 
     steps:
