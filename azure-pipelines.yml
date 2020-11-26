@@ -53,9 +53,12 @@ jobs:
         make test_coverage
       displayName: 'pytest'
 
-    - script: |
-        #coveralls
-      displayName: 'coveralls'
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+        reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+      displayName: 'coverage'
 
   - job: macos
     pool:
@@ -96,3 +99,4 @@ jobs:
         codeCoverageTool: Cobertura
         summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
         reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+      displayName: 'coverage'
