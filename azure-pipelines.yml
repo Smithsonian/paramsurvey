@@ -28,7 +28,9 @@ jobs:
           myenv: "PARAMSURVEY_VERBOSE=3 PYTEST_STDERR_VISIBLE=-s"
         Python39:
           python.version: '3.9'
-        Python310:
+        Python310noray:
+          # no ray wheel for 3.10 yet
+          myenv: ONLY_BUILTINS=1
           python.version: '3.10'
 
     steps:
