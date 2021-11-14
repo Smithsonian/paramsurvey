@@ -324,7 +324,7 @@ def make_pset_ids(psets):
     return ret, pset_ids
 
 
-def check_and_exit_if_nested_pool(user_ret, name, system_kwargs, system_stats):
+def check_and_exit_if_nested_pool(user_ret):
     # File ".../lib/python3.8/multiprocessing/process.py", line 118, in start
     # assert not _current_process._config.get('daemon'), \
     # AssertionError: daemonic processes are not allowed to have children
