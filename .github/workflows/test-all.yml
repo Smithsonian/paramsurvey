@@ -23,6 +23,8 @@ jobs:
 #        - python: 3.98
 #          os: [macos-latest]
 
+    environment: paramsurvey-test
+
     steps:
 
     - uses: actions/checkout@v2
@@ -46,7 +48,6 @@ jobs:
       run: |
         pip install coveralls
         coveralls
-      environment: paramsurvey-test
       env:
         CIRCLECI: 1
         CIRCLE_BRANCH: $GITHUB_REF_NAME
