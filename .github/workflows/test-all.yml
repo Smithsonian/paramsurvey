@@ -1,0 +1,47 @@
+name: test-all
+
+on: [push]
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.6, 3.7, 3.8, 3.9]
+    include:
+    - python: 3.8
+      env: 
+        # make sure that the most verbose level is not crashy
+        PARAMSURVEY_VERBOSE: 3
+        PYTEST_STDERR_VISIBLE: -s
+    - python: 3.10
+      env:
+        # no ray wheel yet on 3.10
+        ONLY_BUILTINS: 1
+# TESTME
+#    - python: 3.98
+#      os: [macos-latest]
+
+    steps:
+    - run: |
+        python -m pip install --upgrade pip
+        pip --use-feature=in-tree-build install . .[test]
+        if [ -z "$ONLY_BUILTINS" ]; then
+          pip --use-feature=in-tree-build install .[ray]
+        fi
+      name: 'Install dependencies'
+
+    - run: |
+        make test_coverage
+      name: 'pytest'
+
+    - run: |
+        pip install coveralls
+        export CIRCLE_BRANCH=$BUILD_SOURCEBRANCH
+        coveralls
+      name: 'coveralls'
+      env:
+        CIRCLECI: 1
+        CIRCLE_BUILD_NUM: $(Build.BuildNumber)
+        COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
