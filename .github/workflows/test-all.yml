@@ -10,18 +10,18 @@ jobs:
         os: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
       include:
-      - python: 3.8
-        env: 
-          # make sure that the most verbose level is not crashy
-          PARAMSURVEY_VERBOSE: 3
-          PYTEST_STDERR_VISIBLE: -s
-      - python: 3.10
-        env:
-          # no ray wheel yet on 3.10
-          ONLY_BUILTINS: 1
+        - python: 3.8
+          env: 
+            # make sure that the most verbose level is not crashy
+            PARAMSURVEY_VERBOSE: 3
+            PYTEST_STDERR_VISIBLE: -s
+        - python: 3.10
+          env:
+            # no ray wheel yet on 3.10
+            ONLY_BUILTINS: 1
 # TESTME
-#      - python: 3.98
-#        os: [macos-latest]
+#        - python: 3.98
+#          os: [macos-latest]
 
     steps:
     - run: |
