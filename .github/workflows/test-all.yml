@@ -45,9 +45,11 @@ jobs:
     - name: 'coveralls'
       run: |
         pip install coveralls
-        export CIRCLE_BRANCH=$BUILD_SOURCEBRANCH
         coveralls
+      environment: paramsurvey-test
       env:
         CIRCLECI: 1
-        CIRCLE_BUILD_NUM: $(Build.BuildNumber)
-        COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
+        CIRCLE_BRANCH: $GITHUB_REF_NAME
+        CIRCLE_BUILD_NUM: $GITHUB_RUN_NUMBER
+        # github -> settings -> environments -> paramsurvey-test 
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
