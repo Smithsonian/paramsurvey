@@ -4,24 +4,27 @@ on: [push]
 
 jobs:
   linux:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
     strategy:
       matrix:
         os: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
         include:
-          - python: 3.8
+          - python: 3.9
+            os: ubuntu-latest
             env: 
               # make sure that the most verbose level is not crashy
               PARAMSURVEY_VERBOSE: 3
               PYTEST_STDERR_VISIBLE: -s
           - python: 3.10
+            os: ubuntu-latest
             env:
               # no ray wheel yet on 3.10
               ONLY_BUILTINS: 1
-# TESTME
-#        - python: 3.98
-#          os: [macos-latest]
+          - python: 3.9
+            os: macos-latest
 
     environment: paramsurvey-test
 
@@ -50,7 +53,7 @@ jobs:
         coveralls
       env:
         CIRCLECI: 1
-        CIRCLE_BRANCH: $GITHUB_REF_NAME
-        CIRCLE_BUILD_NUM: $GITHUB_RUN_NUMBER
+        CIRCLE_BRANCH: ${{ env.GITHUB_REF_NAME }}
+        CIRCLE_BUILD_NUM: ${{ env.GITHUB_RUN_NUMBER }}
         # github -> settings -> environments -> paramsurvey-test 
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
