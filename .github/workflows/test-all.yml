@@ -3,7 +3,7 @@ name: test-all
 on: [push]
 
 jobs:
-  linux:
+  linux-macos:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -39,8 +39,6 @@ jobs:
 
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
 
     - name: 'Install dependencies'
       run: |
