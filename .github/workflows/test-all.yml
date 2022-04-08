@@ -8,23 +8,30 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
+      fast-fail: false
       matrix:
         os: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
         include:
-          - python: 3.9
+          - name: py3.9-verbose
+            python-version: 3.9
             os: ubuntu-latest
             env: 
               # make sure that the most verbose level is not crashy
               PARAMSURVEY_VERBOSE: 3
               PYTEST_STDERR_VISIBLE: -s
-          - python: 3.10
+          - name: py3.10-noray
+            python-version: 3.10
             os: ubuntu-latest
             env:
               # no ray wheel yet on 3.10
               ONLY_BUILTINS: 1
-          - python: 3.9
+          - name: macos-3.9-noray
+            python-version: 3.9
             os: macos-latest
+            env:
+              # no ray on macos
+              ONLY_BUILTINS: 1
 
     environment: paramsurvey-test
 
