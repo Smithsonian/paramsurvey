@@ -14,8 +14,6 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
-        env:
-          MATRIX_LEVEL: True
         include:
           - python-version: 3.6
             os: ubuntu-latest
