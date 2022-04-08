@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   linux-macos:
-    name: ${{ matrix.os }}
+    name: test-all ${{ matrix.os }} ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
