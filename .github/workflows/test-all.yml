@@ -57,6 +57,7 @@ jobs:
       env:
         PARAMSURVEY_VERBOSE: ${{ matrix.PARAMSURVEY_VERBOSE }}
         PYTEST_STDERR_VISIBLE: ${{ matrix.PYTEST_STDERR_VISIBLE }}
+        ONLY_BUILTINS: ${{ matrix.ONLY_BUILTINS }}
 
     - name: 'coveralls'
       run: |
