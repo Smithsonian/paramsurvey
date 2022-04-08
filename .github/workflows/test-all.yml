@@ -8,28 +8,26 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
-      TOP_LEVEL: True
+      TOP_LEVEL: True  # this one always works
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
+        # env not allowed here, syntax error
         include:
           - python-version: 3.6
             os: ubuntu-latest
             # make sure that the most verbose level is not crashy
-            VERBOSE: verbose
-            env: 
-            - PARAMSURVEY_VERBOSE: 3
-            - PYTEST_STDERR_VISIBLE: -s
+            VERBOSE: verbose  # does work
+            PARAMSURVEY_VERBOSE: 3
+            PYTEST_STDERR_VISIBLE: -s
           - python-version: '3.10'
             os: ubuntu-latest
-            env:
-            - ONLY_BUILTINS: 1  # no ray wheel yet on 3.10
+            ONLY_BUILTINS: 1  # no ray wheel yet on 3.10
           - python-version: 3.9
             os: macos-latest
-            env:
-            - ONLY_BUILTINS: 1  # no ray on macos py38, but there is for py39
+            ONLY_BUILTINS: 1  # no ray on macos py38, but there is for py39
 
     environment: paramsurvey-test
 
@@ -52,13 +50,16 @@ jobs:
         pip install . .[test]
 
     - name: 'Install ray if needed'
-      if: ${{ ! env.ONLY_BUILTINS }}
+      if: ${{ ! matrix.ONLY_BUILTINS }}
       run: |
         pip install .[ray]
 
     - name: 'pytest'
       run: |
         make test_coverage
+      env:
+        PARAMSURVEY_VERBOSE: ${{ matrix.PARAMSURVEY_VERBOSE }}
+        PYTEST_STDERR_VISIBLE: ${{ matrix.PYTEST_STDERR_VISIBLE }}
 
     - name: 'coveralls'
       run: |
