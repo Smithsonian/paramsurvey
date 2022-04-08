@@ -48,7 +48,7 @@ jobs:
         pip install . .[test]
 
     - name: 'Install ray if needed'
-      if: ${{ env.ONLY_BUILTINS != 1 }}
+      if: ${{ ! env.ONLY_BUILTINS }}
       run: |
         pip install .[ray]
 
