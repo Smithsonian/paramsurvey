@@ -18,16 +18,16 @@ jobs:
             # make sure that the most verbose level is not crashy
             VERBOSE: verbose
             env: 
-              PARAMSURVEY_VERBOSE: 3
-              PYTEST_STDERR_VISIBLE: -s
+            - PARAMSURVEY_VERBOSE: 3
+            - PYTEST_STDERR_VISIBLE: -s
           - python-version: '3.10'
             os: ubuntu-latest
             env:
-              ONLY_BUILTINS: 1  # no ray wheel yet on 3.10
+            - ONLY_BUILTINS: 1  # no ray wheel yet on 3.10
           - python-version: 3.9
             os: macos-latest
             env:
-              ONLY_BUILTINS: 1  # no ray on macos py38, but there is for py39
+            - ONLY_BUILTINS: 1  # no ray on macos py38, but there is for py39
 
     environment: paramsurvey-test
 
