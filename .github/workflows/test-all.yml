@@ -7,11 +7,15 @@ jobs:
     name: test-all ${{ matrix.os }} ${{ matrix.python-version }} ${{ matrix.VERBOSE }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
+    env:
+      TOP_LEVEL: True
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
+        env:
+          MATRIX_LEVEL: True
         include:
           - python-version: 3.6
             os: ubuntu-latest
