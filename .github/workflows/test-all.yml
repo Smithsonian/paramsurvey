@@ -1,6 +1,6 @@
 name: test-all
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   linux-macos:
