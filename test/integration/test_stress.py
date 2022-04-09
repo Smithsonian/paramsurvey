@@ -24,7 +24,7 @@ def sums(n):
     results = paramsurvey.map(add_worker, psets, name='stress_{}'.format(n))
 
     assert len(results) == n**2
-    if results.missing:
+    if results.missing.empty:
         print('missing')
         print(results.missing)
     assert results.active == 0
