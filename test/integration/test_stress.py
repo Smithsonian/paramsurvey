@@ -27,7 +27,7 @@ def sums(n):
     if results.missing.empty:
         print('missing')
         print(results.missing)
-    assert results.active == 0
+    assert results.progress.active == 0
     assert len(results.missing) == 0
     assert results.to_df()['c'].sum() == n * n * (n-1)
 
