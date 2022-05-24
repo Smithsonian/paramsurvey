@@ -24,6 +24,8 @@ jobs:
             VERBOSE: verbose  # does work
             PARAMSURVEY_VERBOSE: 3
             PYTEST_STDERR_VISIBLE: -s
+          - python-version: 3.8
+            os: ubuntu-latest
 
     environment: paramsurvey-test
 
