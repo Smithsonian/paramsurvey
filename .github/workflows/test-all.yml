@@ -17,6 +17,7 @@ jobs:
         os: [ubuntu-latest]
         #python-version: [3.6, 3.7, 3.8, 3.9]
         python-version: [3.8]
+        EXTRA: [false]
         include:
           - python-version: 3.8
             os: ubuntu-latest
@@ -24,8 +25,7 @@ jobs:
             VERBOSE: verbose  # does work
             PARAMSURVEY_VERBOSE: 3
             PYTEST_STDERR_VISIBLE: -s
-          - python-version: 3.8
-            os: ubuntu-latest
+            EXTRA: true
 
     environment: paramsurvey-test
 
