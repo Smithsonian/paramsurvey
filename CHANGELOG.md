@@ -1,3 +1,6 @@
+- 0.4.18 (not yet tagged)
+	+ support python 3.10, thanks to a ray wheel ray>=1.13
+
 - 0.4.17
 	+ scripts/paramsurvey-cli.py had a bug and was failing yet passing crash-only-testing
 	+ make sure scripts/*.py fails testing if fail
